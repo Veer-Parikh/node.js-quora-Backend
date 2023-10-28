@@ -31,7 +31,29 @@ const printQuestions = async (req, res) => {
     }
 }
 
+const filterByCategory = async(req, res) => {
+    filteredQuestions = await Question.find({
+        category : req.body.category
+    });
+
+    filteredQuestions.forEach((question) => {
+        res.send(filteredQuestions)
+    });
+}
+
+const filterByUserId = async(req, res) => {
+    filteredQuestions = await Question.find({
+        category : req.body.category
+    });
+
+    filteredQuestions.forEach((user) => {
+        res.send(filteredQuestions)
+    })
+}
 module.exports = { 
     askQuestion,
-    printQuestions }
+    printQuestions,
+    filterByCategory,
+    filterByUserId
+ }
     
