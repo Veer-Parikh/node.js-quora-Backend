@@ -32,4 +32,31 @@ const display = async (req,res) => {
 }
 }
 
-module.exports = { answer,display }
+const upvote=async(req,res)=>{
+    try {
+        const answer=await Answer.findById(req.params.id)
+        if(!answer){
+            return res.send("Wrong user id")
+        }
+        answer.upvote.push(req.user._id)
+        await answer.save()
+        res.send("Upvoting done")
+    } catch (error) {
+        res.send(error)
+    }
+}
+const downvote=async(req,res)=>{
+    try {
+        const answer=await Answer.findById(req.params.id)
+        if(!answer){
+            return res.send("Wrong user id")
+        }
+        answer.downvote.push(req.user._id)
+        await answer.save()
+        res.send("Downvoting done")
+    } catch (error) {
+        res.send(error)
+    }
+}
+
+module.exports = { answer,display,upvote,downvote }
