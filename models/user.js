@@ -14,7 +14,11 @@ const userSchema = new Schema({
         required: true,
         unique: true,
         lowercase: true,
-        //validate
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new error("Invalid e-mail id")
+            }
+        }
     },
     mobilee:{
         type: Number,
@@ -25,9 +29,7 @@ const userSchema = new Schema({
     password: {
         type: String,
         required:true,
-        
     }
 });
-
 
 module.exports = mongoose.model('User', userSchema);
