@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer')
 
+
 const sendLogin = async (req,res) => {
     try {
         const transporter = await nodemailer.createTransport({
