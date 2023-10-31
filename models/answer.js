@@ -11,11 +11,19 @@ const answerSchema = new schema({
         ref : 'User',
         required : true
     },
-    questionId:{
+    question:{
         type : schema.Types.ObjectId,
         ref : 'Question',
         required : true
-    }
+    },
+    upvote: [{
+        type: schema.Types.ObjectId,
+        ref:'Answer'
+    }],
+    downvote: [{
+        type: schema.Types.ObjectId,
+        ref:'Answer'
+    }]
 })
 
 module.exports=mongoose.model('Answer',answerSchema)

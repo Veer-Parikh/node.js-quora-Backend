@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 const schema = mongoose.Schema
 
 const commentSchema = new schema({
-    comment:{
+    comment:[{
         type : String,
         required : true
-    },
+    }],
     user:{
         type : schema.Types.ObjectId,
         ref : 'User'
@@ -18,14 +18,14 @@ const commentSchema = new schema({
         type : schema.Types.ObjectId,
         ref : 'Answer'
     },
-    upvote:{
+    upvote:[{
         type: schema.Types.ObjectId,
         ref:'Comment'
-    },
-    downvote:{
+    }],
+    downvote:[{
         type: schema.Types.ObjectId,
         ref:'Comment'
-    }
+    }]
 },
     { timestamps:true }
 )

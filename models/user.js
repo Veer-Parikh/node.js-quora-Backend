@@ -1,9 +1,10 @@
+const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose')
 const validator = require('validator')
 
-const Schema = mongoose.Schema
+const schema = mongoose.Schema
 
-const userSchema = new Schema({
+const userSchema = new schema({
     username:{
         type: String,
         required: true,
@@ -29,7 +30,15 @@ const userSchema = new Schema({
     password: {
         type: String,
         required:true,
-    }
+    },
+    followers: [{
+        type: ObjectId,
+        ref:'User'
+    }],
+    following: [{
+        type: ObjectId,
+        ref:'User'
+    }]
 });
 
 module.exports = mongoose.model('User', userSchema);
