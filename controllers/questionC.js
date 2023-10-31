@@ -5,7 +5,7 @@ const askQuestion = async (req,res) => {
         const question = new Question({
             questionT: req.body.questionT,
             category: req.body.category,
-            user: req.body.user,
+            user: req.user._id,
         })
         await question.save()
         .then(()=> {
@@ -43,17 +43,46 @@ const filterByCategory = async(req, res) => {
 
 const filterByUserId = async(req, res) => {
     filteredQuestions = await Question.find({
-        category : req.body.category
+        user : req.user._id
     });
 
     filteredQuestions.forEach((user) => {
         res.send(filteredQuestions)
     })
 }
+
+const upvote=async(req,res)=>{
+    try {
+        const question =await Question.findById(req.params.id)
+        if(!question){
+            res.send("user doesn't exists")
+        }
+        question.upvote.push(req.user._id)
+        await question.save()
+        res.send("upvoting done")
+    } catch(err) {
+        res.send(err)
+    }
+  }
+const downvote=async(req,res)=>{
+    try {
+        const question=await Question.findById(req.params.id)
+        if(!question){
+            res.send("user doesn't exists")
+        }
+        question.downvote.push(req.user._id)
+        await question.save()
+        res.send("downvoting done")
+    } catch(err) {
+        res.send(err)
+    }
+  }
 module.exports = { 
     askQuestion,
     printQuestions,
     filterByCategory,
-    filterByUserId
+    filterByUserId,
+    upvote,
+    downvote
  }
     

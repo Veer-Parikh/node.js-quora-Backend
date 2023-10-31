@@ -4,8 +4,8 @@ const answer = async (req,res) => {
     try{
         const ans = new Answer({
             answer: req.body.answer,
-            user: req.body.user,
-            questionId: req.body.questionId
+            user: req.user._id,
+            question: req.body.question
         })
         await ans.save()
         .then(() => {
@@ -36,27 +36,27 @@ const upvote=async(req,res)=>{
     try {
         const answer=await Answer.findById(req.params.id)
         if(!answer){
-            return res.send("Wrong user id")
+            return res.send("user doesn't exists")
         }
         answer.upvote.push(req.user._id)
         await answer.save()
-        res.send("Upvoting done")
-    } catch (error) {
-        res.send(error)
+        res.send("upvoting done")
+    } catch(err) {
+        res.send(err)
     }
 }
 const downvote=async(req,res)=>{
     try {
         const answer=await Answer.findById(req.params.id)
         if(!answer){
-            return res.send("Wrong user id")
+            res.send("user doesn't exists")
         }
         answer.downvote.push(req.user._id)
         await answer.save()
-        res.send("Downvoting done")
-    } catch (error) {
-        res.send(error)
+        res.send("downvoting done")
+    } catch(err) {
+        res.send(err)
     }
 }
 
-module.exports = { answer,display,upvote,downvote }
+module.exports = { answer,display,downvote,upvote }
