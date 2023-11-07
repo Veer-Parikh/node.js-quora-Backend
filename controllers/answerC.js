@@ -32,31 +32,78 @@ const display = async (req,res) => {
 }
 }
 
+const delanswer = async (req,res) => {
+    try {
+        const ans = await Answer.findByIdAndDelete(req.body.id)
+        if(ans) {
+            res.send("deletion successful")
+        }
+        else {
+            res.send("deletion unsuccessful")
+        }
+    } catch (err) {
+        res.send(err)
+    }
+}
+
+const updateanswer = async (req,res) => {
+    try {
+        const ans = await Answer.findByIdAndUpdate(req.params.id,req.body,)
+        if(ans) {
+            res.send("updation successful")
+        }
+        else {
+            res.send("updation unsuccessful")
+        }
+    } catch (err) {
+        res.send(err)
+    }
+}
+
 const upvote=async(req,res)=>{
     try {
         const answer=await Answer.findById(req.params.id)
         if(!answer){
-            return res.send("user doesn't exists")
+            return res.send("answer doesn't exists")
         }
-        answer.upvote.push(req.user._id)
-        await answer.save()
-        res.send("upvoting done")
+        const userId = req.user._id
+        if(answer.upvote.includes(userId)) {
+            answer.upvote.pull(userId)
+        }
+        else if(answer.downvote.includes(userId)) {
+            answer.downvote.pull(userId)
+        }
+        else {
+            answer.upvote.push(req.user._id)
+            await answer.save()
+            res.send("upvoting done")
+        }
     } catch(err) {
         res.send(err)
     }
 }
+
 const downvote=async(req,res)=>{
     try {
         const answer=await Answer.findById(req.params.id)
         if(!answer){
             res.send("user doesn't exists")
         }
-        answer.downvote.push(req.user._id)
-        await answer.save()
-        res.send("downvoting done")
+        const userId = req.user._id
+        if(answer.upvote.includes(userId)) {
+            answer.upvote.pull(userId)
+        }
+        else if(answer.downvote.includes(userId)) {
+            answer.downvote.pull(userId)
+        }
+        else {
+            answer.downvote.push(req.user._id)
+            await answer.save()
+            res.send("downvoting done")
+        }
     } catch(err) {
         res.send(err)
     }
 }
 
-module.exports = { answer,display,downvote,upvote }
+module.exports = { answer,display,delanswer,updateanswer,downvote,upvote }

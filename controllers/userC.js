@@ -2,6 +2,7 @@ const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const { sendLogin,sendReg } = require('../controllers/nodemailer')
+const cloudinary = require('cloudinary').v2
 
 const register = async (req,res) => {
     try{
@@ -57,15 +58,21 @@ const follow=async(req,res)=>{
     try {
         const followinguser= await User.findById(req.user._id)
         const followuser= await User.findById(req.params.id)
-        
+        const userId = req.user._id
+
         if(!followuser || !followinguser){
             return res.send("Wrong user id")
         }
-        followuser.followers.push(req.user._id)
-        followinguser.following.push(req.params.id)
-        await followuser.save()
-        await followinguser.save()
-        res.send("Followed")
+        else if(User.following.includes(userId)) {
+            return res.send("already follow this user")
+        }
+        else {
+            followuser.followers.push(req.user._id)
+            followinguser.following.push(req.params.id)
+            await followuser.save()
+            await followinguser.save()
+            res.send("followed")
+        }
     } catch (error) {
         res.send(error)        
     }
@@ -85,6 +92,7 @@ const unfollow = async(req,res) => {
         res.status(500).send(error)    
     }
 }
+
 const display = async(req,res) => {
     try {
         const users = await User.find();
@@ -94,4 +102,53 @@ const display = async(req,res) => {
             res.json(error);
     }
 }
-module.exports = { register,login,follow,unfollow,display };
+
+const deluser = async (req,res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.body.id)
+        if(user) {
+            res.send("deletion successful")
+        }
+        else {
+            res.send("deletion unsuccessful")
+        }
+    } catch (err) {
+        res.send(err)
+    }
+}
+
+const updateuser = async (req,res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id,req.body,)
+        if(user) {
+            res.send("updation successful")
+        }
+        else {
+            res.send("updation unsuccessful")
+        }
+    } catch (err) {
+        res.send(err)
+    }
+}
+
+cloudinary.config({
+    cloud_name: "djnkpco73",
+    api_key: "621582998277719",
+    api_secret: "nzYw9Ll4H-L343skJ-E28k2K5zg",
+})
+
+const uploadprofilepic= async(req,res)=>{
+    try {
+        const result = await cloudinary.uploader.upload(req.file.path);
+        const profilePicUrl = result.secure_url;
+
+        const user = await User.findById(req.user._id);
+        user.profilePicUrl = profilePicUrl;
+        await user.save();
+        return res.send("Profile picture uploaded and saved.");
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
+
+module.exports = { register,login,follow,unfollow,display,updateuser,deluser,uploadprofilepic};
