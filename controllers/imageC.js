@@ -19,7 +19,6 @@ const uploadImage = async (req,res) => {
         res.send(err)
     }
 }
-
 const display = async (req,res) => {
     try {
         const images = await Image.find({},'data contentType')
