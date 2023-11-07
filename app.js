@@ -36,3 +36,6 @@ app.use('/answer',answerRouter)
 
 const commentRouter=require('./routes/commentR')  
 app.use('/comment',commentRouter)
+
+const imageRouter = require('./routes/imageR')
+app.use('/images',imageRouter)
