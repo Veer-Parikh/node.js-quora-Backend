@@ -13,7 +13,7 @@ const register = async (req,res) => {
             password: req.body.password
         })
         newuser.password = await bcrypt.hash(newuser.password,10)
-        await newuser.save()
+        const user = await newuser.save()
         .then((savedUser) => {
             console.log("saved successfully")
             res.send(savedUser)

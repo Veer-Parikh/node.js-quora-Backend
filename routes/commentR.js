@@ -9,6 +9,6 @@ router.post('/upvote/:id',authenticatetoken,upvote)
 router.post('/downvote/:id',authenticatetoken,downvote)
 router.get("/display",authenticatetoken,printComments)
 router.delete('/deletecomment',authenticatetoken,delcom)
-router.patch('/updatecomment',authenticatetoken,updatecom)
+router.patch('/updatecomment/:id',authenticatetoken,updatecom)
 
 module.exports = router;

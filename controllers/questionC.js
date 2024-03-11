@@ -7,7 +7,7 @@ const askQuestion = async (req,res) => {
             category: req.body.category,
             user: req.user._id,
         })
-        await question.save()
+        const question1 = await question.save()
         .then(()=> {
             console.log("question saved successfully")
         })
@@ -23,7 +23,7 @@ const askQuestion = async (req,res) => {
 
 const printQuestions = async (req, res) => {
     try {
-        const questions = await Question.find();
+        const questions = await Question.find().populate('user');
         res.send(questions);
     } catch (error) {
         console.error(error);

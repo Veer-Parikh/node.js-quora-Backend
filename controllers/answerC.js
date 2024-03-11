@@ -3,11 +3,11 @@ const Answer = require('../models/answer')
 const answer = async (req,res) => {
     try{
         const ans = new Answer({
-            answer: req.body.answer,
             user: req.user._id,
-            question: req.body.question
+            question: req.body.question,
+            answer: req.body.answer
         })
-        await ans.save()
+        const answer = await ans.save()
         .then(() => {
             console.log("answer saved successfully")
         })
@@ -24,12 +24,12 @@ const answer = async (req,res) => {
 
 const display = async (req,res) => {
     try{
-        answers = await Answer.find();
+        const answers = await Answer.find().populate('user question');
         res.send(answers);
-} catch (error) {
-    console.error(error);
-    res.json(error);
-}
+    } catch (error) {
+        console.error(error);
+        res.json(error);
+    }
 }
 
 const delanswer = async (req,res) => {

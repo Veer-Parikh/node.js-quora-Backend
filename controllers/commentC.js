@@ -8,7 +8,7 @@ const addComment = async (req,res) => {
       const user = req.user._id
       const newcomment = new Comment({comment,user,answer})
       //console.log("part 1")
-      await newcomment.save()
+      const comment1 = await newcomment.save()
       res.send("comment created")
     } catch(err) {
         res.send(err)
@@ -64,7 +64,7 @@ const downvote=async(req,res)=>{
 
 const printComments = async (req, res) => {
     try {
-        const comments = await Comment.find();
+        const comments = await Comment.find().populate('user answer');
         res.send(comments);
     } catch (error) {
         console.error(error);

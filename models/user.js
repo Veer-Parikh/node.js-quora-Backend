@@ -38,7 +38,10 @@ const userSchema = new schema({
     following: [{
         type: ObjectId,
         ref:'User'
-    }]
+    }],
+    pfpurl: {
+        type: String
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);

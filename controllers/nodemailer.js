@@ -14,8 +14,8 @@ const sendLogin = async (req,res) => {
         let info = await transporter.sendMail({
             from: 'Welcome to Quora <breanne0@ethereal.email>' ,
             to : "parikhveer71@gmail.com",
-            subject : "Login",
-            text : "Successfully Logged in"
+            subject : "Welcome!",
+            text : "successfully logged in!!"
         })
         console.log("check ethereal inbox");
     }

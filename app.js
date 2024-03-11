@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv')
+const {connectdb} = require('./config/db.js')
 
 dotenv.config()
 
@@ -13,18 +14,7 @@ const url= process.env.mongo_url;
 app.use(bodyParser.json());
 app.use(express.json())
 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('Connected to MongoDB');
-    app.listen(Port, () => {
-      console.log(`Server is running on port ${Port}`);
-    });
-  })
-
-  .catch((error) => {
-    console.error('Error connecting to MongoDB', error);
-  });
-
+connectdb()
 const userRouter = require('./routes/userR')
 app.use('/user',userRouter)
 
@@ -39,3 +29,5 @@ app.use('/comment',commentRouter)
 
 const imageRouter = require('./routes/imageR')
 app.use('/images',imageRouter)
+
+module.exports=app
