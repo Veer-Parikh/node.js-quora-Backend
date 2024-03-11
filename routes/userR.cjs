@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router();
-const { register,login,follow,unfollow,display,deluser,updateuser,uploadprofilepic } = require('../controllers/userC')
-const authenticatetoken = require('../middleware/auth1')
-const { upload } = require('../middleware/multer')
+const { register,login,follow,unfollow,display,deluser,updateuser,uploadprofilepic } = require('../controllers/userC.cjs')
+const authenticatetoken = require('../middleware/auth1.cjs')
+const { upload } = require('../middleware/multer.cjs')
 
 router.post('/signup',register)
 router.post('/login',login)

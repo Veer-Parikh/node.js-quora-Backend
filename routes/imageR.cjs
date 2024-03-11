@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const multer = require('multer')
-const { uploadImage,display,imagedis } = require('../controllers/imageC')
-const authenticatetoken = require('../middleware/auth1.js')
+const { uploadImage,display,imagedis } = require('../controllers/imageC.cjs')
+const authenticatetoken = require('../middleware/auth1.cjs')
 const upload = multer({ dest: 'uploads/'})
 
 // const storage = multer.diskStorage()

@@ -1,7 +1,7 @@
 const request = require('supertest')
-const app = require('../app.js')
+const app = require('../app.cjs')
 
-const {connectdb} = require('../config/db.js')
+const {connectdb} = require('../config/db.cjs')
 const mongoose = require('mongoose')
 // const express = require('express')
 // require('dotenv').config()

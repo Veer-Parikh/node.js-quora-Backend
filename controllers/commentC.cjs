@@ -1,5 +1,5 @@
 //const string = require('@hapi/joi/lib/types/string')
-const Comment = require('../models/comment')
+const Comment = require('../models/comment.cjs')
 const jwt = require('jsonwebtoken');
 
 const addComment = async (req,res) => {

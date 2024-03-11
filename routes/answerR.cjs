@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const { answer,display,upvote,downvote,delanswer,updateanswer } = require('../controllers/answerC')
-const authenticatetoken = require('../middleware/auth1')
+const { answer,display,upvote,downvote,delanswer,updateanswer } = require('../controllers/answerC.cjs')
+const authenticatetoken = require('../middleware/auth1.cjs')
 
 router.post('/answer',authenticatetoken,answer)
 router.get('/display',authenticatetoken,display)

@@ -1,4 +1,4 @@
-const Question = require('../models/question')
+const Question = require('../models/question.cjs')
 
 const askQuestion = async (req,res) => {
     try{

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { askQuestion,printQuestions,filterByCategory,filterByUserId,upvote,downvote,updateques,delquestion } = require('../controllers/questionC')
-const authenticatetoken = require('../middleware/auth1.js')
+const { askQuestion,printQuestions,filterByCategory,filterByUserId,upvote,downvote,updateques,delquestion } = require('../controllers/questionC.cjs')
+const authenticatetoken = require('../middleware/auth1.cjs')
 
 router.post('/askQuestion',authenticatetoken,askQuestion)
 router.get('/getQuestions',authenticatetoken,printQuestions)

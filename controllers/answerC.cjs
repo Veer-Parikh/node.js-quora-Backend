@@ -1,4 +1,4 @@
-const Answer = require('../models/answer')
+const Answer = require('../models/answer.cjs')
 
 const answer = async (req,res) => {
     try{

@@ -1,7 +1,7 @@
-const User = require('../models/user')
+const User = require('../models/user.cjs')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
-const { sendLogin,sendReg } = require('../controllers/nodemailer')
+const { sendLogin,sendReg } = require('./nodemailer.cjs')
 const cloudinary = require('cloudinary').v2
 
 const register = async (req,res) => {

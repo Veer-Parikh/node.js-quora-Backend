@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const authenticatetoken = require('../middleware/auth1')
-const {addComment,upvote,downvote,printComments,delcom,updatecom} = require('../controllers/commentC')
+const authenticatetoken = require('../middleware/auth1.cjs')
+const {addComment,upvote,downvote,printComments,delcom,updatecom} = require('../controllers/commentC.cjs')
 
 
 router.post("/addcomment",authenticatetoken,addComment)
